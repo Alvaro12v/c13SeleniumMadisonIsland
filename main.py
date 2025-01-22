@@ -43,6 +43,7 @@ add_to_cart = driver.find_element(By.ID, 'AddToCartText-product-template')
 assert 'ADD TO CART' == add_to_cart.text
 add_to_cart.click()
 
+
 shopping_cart_section_title = driver.find_element(By.XPATH, '//h1')
 shopping_item_list_name = driver.find_element(By.CLASS_NAME, 'list-view-item__title')
 quantity_box = driver.find_elements(By.CLASS_NAME,'cart__qty-input')
