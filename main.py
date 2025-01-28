@@ -1,8 +1,11 @@
-from CreateAccount import CreateAccount
+from create_account import CreateAccount
+from home import TestHome
+from men_section import MenCollections
+from items import ItemView
 from selenium import webdriver
 # import time #time.sleep(1)
 from time import sleep # sleep(1) mismo resultado de sleep en lina 2 y 3 diferente sintaxis
-from selenium.webdriver.support.ui import Select
+
 
 base_url = 'https://madison-island.com/'
 signup_url ='https://madison-island.com/account/register'
@@ -16,24 +19,49 @@ categories = {
 
 class TestSignUp:
     driver = None
-    create_account = None
+    create_account = None #aqui debes estar llamando al archivo y no la clase CreateAccount
+    home = None
+    men_category = None
+    items = None
 
     @classmethod
     def setup_class(cls):
         cls.driver = webdriver.Chrome()
-        cls.create_account = CreateAccount(cls.driver)
-        cls.driver.get(signup_url)
+        cls.create_account = CreateAccount(cls.driver) #Archivo(create_account) = Clase(CreateAccount)
+        cls.home_interactions = TestHome(cls.driver)
+        cls.men_category = MenCollections(cls.driver)
+        cls.items = ItemView(cls.driver)
+        cls.driver.get(base_url)
         cls.driver.implicitly_wait(10)
 
-    def test_signup_valid_data(self):#MEtodos de prueba
+
+    def test_signup_valid_data(self):#Metodos de prueba
+
+        valid_data = self.create_account #aqui se llama al nombre del archivo, no la clase del archivo CreateAccount
+
+        valid_data.fill_first_name()
+        valid_data.fill_last_name()
+        valid_data.fill_email()
+        valid_data.fill_password()
+        valid_data.click_create_button()
         #LOCATE FIRST NAME SEND KEYS NOMBRE
         #LOCATE LAST NAME SEND KEYS NOMBRE
-        pass
+
+    def test_purchase_trouser(self):
+        home = self.home_interactions
+        men_category = self.men_category
+        items = self.items
+        home.click_men_category()
+        men_category.click_item_by_class_name_and_index(0)
+        items.select_size_by_index(2)
+        items.select_color_by_index(0)
+        items.click_add_to_cart_button()
+
 
     @classmethod
     def teardown_class(cls):
-        sleep(2)
-        self.driver.quit()
+        sleep(10)
+        cls.driver.quit()
 
 
 #

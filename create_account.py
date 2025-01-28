@@ -13,8 +13,8 @@ INPUT_CREATE_BUTTON_XPATH = '//*[@value="Create"]'
 
 class CreateAccount: #nos da las acciones que vamos a hacer en la pagina de registro
 
-    def __init__(self):
-        self.driver = webdriver.Chrome()
+    def __init__(self,driver):
+        self.driver = driver
 
     def fill_first_name(self):
         self.driver.find_element(By.ID, INPUT_FIRST_NAME_ID).send_keys(data.valid_user['first_name'])
